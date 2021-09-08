@@ -39,7 +39,9 @@ public class UserPassHandler {
                 return null;
             MinecraftTokenRequestor.MinecraftProfile minecraftProfile = MinecraftTokenRequestor.getProfile(minecraftToken);
 
-            return new AuthResponse(minecraftToken.accessToken,authToken.refreshToken,minecraftProfile.name,minecraftProfile.skinURL, UUID.fromString(minecraftProfile.uuid));
+            return new AuthResponse(minecraftToken.accessToken,authToken.refreshToken,minecraftProfile.name,minecraftProfile.skinURL, UUID.fromString(minecraftProfile.uuid.replaceFirst(
+                    "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
+            )));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
